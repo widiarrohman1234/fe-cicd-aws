@@ -1,100 +1,235 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1,
-            shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- table -->
+    <style>
+      /* Styling untuk tabel */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+    
+      th, td {
+        padding: 8px;
+        border: 1px solid #ccc;
+      }
+    
+      th {
+        background-color: #f2f2f2;
+      }
+    
+      /* Styling untuk tombol aksi */
+      .action-buttons button {
+        margin-right: 5px;
+      }
+    </style>
+    <!-- end table -->
 
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-        <title>Hello, world!</title>
-        <script language="JavaScript" type="text/javascript">
-            fetch("http://18.136.200.200:5000/books").then(
-            res => {
-                res.json().then(
-                data => {
-                    var fetchJson = data.data.books.books
-                    console.log(fetchJson);
-                    if (fetchJson.length > 0) {
+    <!-- form -->
+    <style>
+      /* Styling untuk form */
+      form {
+        width: 300px;
+        margin-bottom: 20px;
+      }
+    
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    
+      select {
+        height: 32px;
+      }
+    
+      button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <!-- end form -->
+  </head>
 
-                    var temp = "";
-                    var button = `<div class="btn-group btn-group-sm" role="group">
-                                            <button type="button" class="btn btn-warning" onclick = "edit();">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick = "drop();">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    `;
-                        var no = 1;
-                    fetchJson.forEach((itemData) => {
-                        temp += "<tr>";
-                        temp += "<td>" + no++ + "</td>";
-                        temp += "<td>" + button + "</td>";
-                        temp += "<td>" + itemData.judul + "</td>";
-                        temp += "<td>" + itemData.penerbit + "</td>";
-                        temp += "<td>" + itemData.jumlah_halaman + "</td></tr>";
-                    });
-                    document.getElementById('data').innerHTML = temp;
-                    }
-                }
-                )
-            }
-            )
-            function edit(){
-                alert("Maintenance Edit")
-            }
-            function drop(){
-                alert("Maintenance Delete")
-            }
-        </script>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Hello, world! berhasil- 18.136.200.200 yey</h1>
-            <a href="create.html">
-                <button type="button" class="btn btn-dark">
-                    Tambah PENS
-                    <i class="bi bi-plus-square"></i>
-                </button>
-            </a>
-            <br><br>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Action</th>
-                        <th scope="col">Judul Buku</th>
-                        <th scope="col">Penerbit</th>
-                        <th scope="col">Jumlah Halaman</th>
-                    </tr>
-                </thead>
-                <tbody id="data">
-                </tbody>
-            </table>
-        </div>
+  <body>
+    <div id="app">
+      <h1>User Management</h1>
+      <!-- Form untuk menambahkan pengguna -->
+      <!-- Form untuk menambahkan pengguna -->
+      <form @submit.prevent="addUser">
+        <label for="username">Username:</label>
+        <input type="text" id="username" v-model="newUser.username" required>
 
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="newUser.email" required>
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    </body>
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="newUser.password" required>
+
+        <label for="status">Status:</label>
+        <select id="status" v-model="newUser.status" required>
+          <option value="1">Active</option>
+          <option value="0">Inactive</option>
+        </select>
+
+        <button type="submit">{{ editMode ? 'Save' : 'Add User' }}</button>
+      </form>
+      <hr>
+      <!-- Tabel untuk menampilkan daftar pengguna -->
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in users" :key="index">
+            <td>{{ index+1 }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.status }}</td>
+            <td class="action-buttons">
+              <button @click="editUser(user.id)">Edit</button>
+              <button @click="deleteUser(user.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+    new Vue({
+      el: "#app",
+      data: {
+        users: [],
+        newUser: {
+          username: "",
+          email: "",
+          password: "",
+          status: "",
+          // created_at: "",
+        }, 
+        editMode: false,
+        editUserId: null
+      },
+      mounted() {
+        this.fetchUsers();
+      },
+      methods: {
+        fetchUsers() {
+          axios.get('http://localhost:5000/user')
+          .then(response => {
+            console.log(response.data.data[0])
+            this.users = response.data.data;
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        },
+        addUser() {
+          console.log('editMode: '+this.editMode)
+          console.log('this.editUserId: '+this.editUserId)
+          if(this.editMode){
+          // Perbarui pengguna yang ada
+          console.log('start edit')
+          axios.put(`http://localhost:5000/user/${this.editUserId}`, this.newUser)
+            .then(response => {
+              console.log('start response')
+              // Update the user in the UI or perform any other necessary actions
+              this.clearForm();
+              this.editMode = false;
+              this.editUserId = null;
+              this.fetchUsers()
+            })
+            .catch(error => {
+              console.log('edit error response')
+              console.error(error);
+            });
+          }else{
+            axios.post('http://localhost:5000/user', this.newUser)
+            .then(response => {
+              this.users.push(response.data.data);
+              this.clearForm();
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+        },
+        editUser(userId) {
+          this.editMode = true;
+          this.editUserId = userId;
+          // Implement your edit logic here
+          axios.get(`http://localhost:5000/user/${userId}`)
+            .then(response => {
+              console.log(response.data.data)
+              const userToUpdate = response.data.data;
+              // Isi nilai newUser dengan data pengguna yang akan diedit
+              this.newUser = {
+                username: userToUpdate.username,
+                email: userToUpdate.email,
+                password: userToUpdate.password,
+                status: userToUpdate.status,
+                // created_at: userToUpdate.created_at,
+              };
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        },
+        deleteUser(userId) {
+         if( confirm('Apakah anda yakin akan menghapus data ini ??')){
+            axios.delete(`http://localhost:5000/user/${userId}`)
+            .then(response => {
+              this.users = this.users.filter(user => user.id !== userId);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+         }
+           
+        },
+        clearForm() {
+          this.newUser.username = "";
+          this.newUser.email = "";
+          this.newUser.status = "";
+          this.newUser.password = "";
+          this.newUser.created_at = "";
+        }
+      }
+    });
+  </script>
+  </body>
+
 </html>
