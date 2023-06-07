@@ -148,7 +148,7 @@
       },
       methods: {
         fetchUsers() {
-          axios.get('http://13.229.205.178:5000/user')
+          axios.get('http://54.179.11.111:5000/user')
           .then(response => {
             console.log(response.data.data[0])
             this.users = response.data.data;
@@ -163,7 +163,7 @@
           if(this.editMode){
           // Perbarui pengguna yang ada
           console.log('start edit')
-          axios.put(`http://13.229.205.178:5000/user/${this.editUserId}`, this.newUser)
+          axios.put(`http://54.179.11.111:5000/user/${this.editUserId}`, this.newUser)
             .then(response => {
               console.log('start response')
               // Update the user in the UI or perform any other necessary actions
@@ -177,7 +177,7 @@
               console.error(error);
             });
           }else{
-            axios.post('http://13.229.205.178:5000/user', this.newUser)
+            axios.post('http://54.179.11.111:5000/user', this.newUser)
             .then(response => {
               this.users.push(response.data.data);
               this.clearForm();
@@ -191,7 +191,7 @@
           this.editMode = true;
           this.editUserId = userId;
           // Implement your edit logic here
-          axios.get(`http://13.229.205.178:5000/user/${userId}`)
+          axios.get(`http://54.179.11.111:5000/user/${userId}`)
             .then(response => {
               console.log(response.data.data)
               const userToUpdate = response.data.data;
@@ -210,7 +210,7 @@
         },
         deleteUser(userId) {
          if( confirm('Apakah anda yakin akan menghapus data ini ??')){
-            axios.delete(`http://13.229.205.178:5000/user/${userId}`)
+            axios.delete(`http://54.179.11.111:5000/user/${userId}`)
             .then(response => {
               this.users = this.users.filter(user => user.id !== userId);
             })
